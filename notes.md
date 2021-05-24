@@ -6,6 +6,8 @@ o --resurse-submodules nos permite puxar o template html do projeto, que foi cri
 
 ======================================================================================
 
+# Fallback pro MediaRecorder no Safari/firefox
+
 **Browsers como safri não possuem o MediaRecorder, por isso foi acrescentado um polyfill**
 
   <script>
@@ -34,15 +36,44 @@ globalThis.io.connect()
 
 =======================================================================================
 
+# imports com ESmodules
+
 Se liga que o import com o ecmascript modules, é importante colocar a extensão do arquivo
 
 import { constants } from './constants.js';
 
 =======================================================================================
 
-# =======================================================================================
+# Criando o server
+
+depois do npm init instalamos o socket.io na versão que estamos usando no frontend
+
+**❯ npm i socket.io@4.0.1**
 
 # =======================================================================================
+
+# Package JSON do server
+
+"type": "module",
+"scripts": {
+"start": "node src/index.js",
+"dev": "npx nodemon src/index.js",
+
+- passamos type="module"
+- nosso script start é tipo produção
+- o script dev usa o nodemon
+
+IMPORTANTE: usamos o npx pra garantir que o script vai olhar a node_modules da pasta server, e não a node_modules global
+
+# =======================================================================================
+
+Tive problemas com **await**
+
+const server = await socketServer.start();
+
+pois o node 12 ainda não suporta esse await nativamente.
+
+Tem que ficar de olho nessa versão do Node hein!
 
 # =======================================================================================
 

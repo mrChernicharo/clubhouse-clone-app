@@ -13,7 +13,7 @@ export default class SocketServer {
       // Define headers
       response.writeHead(200, {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
       });
 
       response.end('Booooua meu chapa! O Servidor Funciona!');
@@ -29,7 +29,8 @@ export default class SocketServer {
     const room = this.#io.of('/room');
 
     room.on('connection', (socket) => {
-      socket.emit('userConnection', 'socket id se conectou' + socket.id);
+      socket.emit('userConnection', `socket id ${socket.id} se conectou`);
+
       socket.on('joinRoom', (data) => {
         console.log('dados recebidos', data);
       });
