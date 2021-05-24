@@ -20,8 +20,11 @@ export default class RoomsController {
 
     const updatedUserData = this.#updateGlobalUserData(userId, user, roomId);
 
-    console.log({ updatedUserData });
+    const updatedRoom = this.#joinUserRoom(socket, updatedUserData, room);
+
     socket.emit(constants.event.USER_CONNECTED, updatedUserData);
+
+    // console.log({ updatedRoom });
   }
 
   #joinUserRoom(socket, user, room) {
@@ -33,9 +36,41 @@ export default class RoomsController {
       roomId,
     });
 
+    // console.log({ currentUser });
+
     // definir quem é o dono da sala
-    const [owner, users] = existingRoom ? 
-      [currentRoom.owner, currentRoom.users] : [currentUser, new Set()]
+    const [owner, users] = existingRoom ? [currentRoom.owner, currentRoom.users] : [currentUser, new Set()];
+
+    // console.log({ owner, currentUser });
+
+    const updatedRoom = this.#mapRoom({
+      ...currentRoom,
+      ...room,
+      owner,
+      users: new Set([...users, ...[currentUser]]),
+    });
+
+    console.log({ updatedRoom });
+    this.rooms.set(roomId, updatedRoom);
+
+    socket.join(roomId);
+
+    return this.rooms.get(roomId);
+  }
+
+  #mapRoom(room) {
+    const users = [...room.users.values()]; // é um Set né, por isso .values()..
+    const speakersCount = users.filter((user) => user.isSpeaker).length;
+    const featuredAttendees = users.slice(0, 3);
+
+    const mappedRoom = new Room({
+      ...room,
+      attendeesCount: room.users.size,
+      speakersCount,
+      featuredAttendees,
+    });
+
+    return mappedRoom;
   }
 
   #updateGlobalUserData(userId, userData = {}, roomId = '') {
@@ -63,3 +98,7 @@ export default class RoomsController {
     return new Map(functions);
   }
 }
+
+// acabei de criar uma sala, entrei numa sala vazia? o owner sou eu, senão é a pessoa que estava lá como owner
+// entrei numa sala vazia? já entro como speaker
+// entrei numa sala existente? já entro como atendee

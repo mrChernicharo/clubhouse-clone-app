@@ -13,7 +13,7 @@ const socket = socketBuilder
 
 const room = {
   id: Date.now(),
-  topic: 'mariana é minha  gordinha',
+  topic: 'success is the best revenge',
 };
 
 const user = {
