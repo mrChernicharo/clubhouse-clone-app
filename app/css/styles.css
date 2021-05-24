@@ -1,13 +1,14 @@
 @import url(reset.css);
 @import url(colors.css);
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
-html, body {
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+html,
+body {
   height: 100%;
 }
 
 body {
   background: var(--primary-color);
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 nav {
@@ -62,7 +63,8 @@ a {
   box-shadow: 0rem 0.05rem 0.1rem var(--ice-color);
 }
 
-.cards__card__title, .room-card__title {
+.cards__card__title,
+.room-card__title {
   font-size: 0.8rem;
   color: var(--graphite-dark-color);
   line-height: 1.4;
@@ -281,7 +283,7 @@ a {
   text-align: center;
 }
 
-.topic-modal__content__form input[type='text'] {
+.topic-modal__content__form input[type="text"] {
   margin-bottom: 1rem;
   height: 4rem;
   border-radius: 10px;
@@ -429,4 +431,6 @@ a {
 .hidden {
   display: none;
 }
-audio { display:none;}
+audio {
+  display: none;
+}
