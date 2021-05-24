@@ -20,3 +20,5 @@ const user = {
   img: 'https://www.iconfinder.com/icons/4043234/animal_avatar_bear_russian_icon',
   username: 'mrChernicharo',
 };
+
+socket.emit(constants.events.JOIN_ROOM, { user, room });

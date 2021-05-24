@@ -49,3 +49,7 @@ table {
 button {
 	cursor: pointer;
 }
+
+a:hover{
+	cursor: pointer;
+}

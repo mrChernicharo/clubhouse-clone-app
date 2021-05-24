@@ -1,4 +1,4 @@
 module.exports = {
-  printWidth: 110,
+  printWidth: 130,
   singleQuote: true,
 };

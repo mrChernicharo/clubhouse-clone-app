@@ -351,6 +351,7 @@ a {
   text-align: right;
   display: flex;
   align-self: flex-end;
+  cursor: pointer;
 }
 
 .create-room-modal__content__rooms {
