@@ -28,13 +28,13 @@ export default class SocketServer {
 
     const room = this.#io.of('/room');
 
-    room.on('connection', (socket) => {
-      socket.emit('userConnection', `socket id ${socket.id} se conectou`);
+    // room.on('connection', (socket) => {
+    //   socket.emit('userConnection', `socket id ${socket.id} se conectou`);
 
-      socket.on('joinRoom', (data) => {
-        console.log('dados recebidos', data);
-      });
-    });
+    //   socket.on('joinRoom', (data) => {
+    //     console.log('dados recebidos', data);
+    //   });
+    // });
 
     return new Promise((resolve, reject) => {
       server.on('error', reject);
