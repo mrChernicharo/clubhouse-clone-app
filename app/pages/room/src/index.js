@@ -17,7 +17,7 @@ const room = {
 };
 
 const user = {
-  img: 'https://www.iconfinder.com/icons/4043234/animal_avatar_bear_russian_icon',
+  img: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/bear_russian_animal_avatar-512.png',
   username: 'mrChernicharo',
 };
 
