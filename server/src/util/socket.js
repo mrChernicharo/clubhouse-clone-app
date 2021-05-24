@@ -16,7 +16,7 @@ export default class SocketServer {
         'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
       });
 
-      response.end('Booooua meu chapa! Servidor Funciona!');
+      response.end('Booooua meu chapa! O Servidor Funciona!');
     });
 
     this.#io = new Server(server, {
@@ -24,6 +24,15 @@ export default class SocketServer {
         origin: '*',
         credentials: false,
       },
+    });
+
+    const room = this.#io.of('/room');
+
+    room.on('connection', (socket) => {
+      socket.emit('userConnection', 'socket id se conectou' + socket.id);
+      socket.on('joinRoom', (data) => {
+        console.log('dados recebidos', data);
+      });
     });
 
     return new Promise((resolve, reject) => {
