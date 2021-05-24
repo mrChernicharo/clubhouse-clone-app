@@ -12,5 +12,11 @@ export default class RoomsController {
       .map((name) => [name, this[name].bind(this)]);
 
     return new Map(functions);
+
+    // queremos essa estrutura aqui:
+    // [
+    // 	['onNewConnection', this.onNewConnection]
+    // 	['diconnected', this.diconnected]
+    // ]
   }
 }
