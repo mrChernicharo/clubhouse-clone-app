@@ -1,11 +1,31 @@
 import http from 'http';
 import { Server } from 'socket.io';
+import { constants } from './constants.js';
 
 export default class SocketServer {
   #io; // <-- membro privado
 
   constructor({ port }) {
     this.port = port;
+    this.namespaces = {};
+  }
+
+  attachEvents({ routeConfig }) {
+    for (const routes of routeConfig) {
+      for (const [namespace, { events, eventEmitter }] of Object.entries(routes)) {
+        // console.log([namespace, { events, eventEmitter }]) ;
+
+        const route = (this.namespaces[namespace] = this.#io.of(`/${namespace}`));
+
+        route.on('connection', (socket) => {
+          for (const [funcName, fn] of events) {
+            socket.on(funcName, (...args) => fn(socket, ...args));
+          }
+
+          eventEmitter.emit(constants.event.USER_CONNECTED, socket);
+        });
+      }
+    }
   }
 
   async start() {
@@ -26,7 +46,7 @@ export default class SocketServer {
       },
     });
 
-    const room = this.#io.of('/room');
+    // const room = this.#io.of('/room');
 
     // room.on('connection', (socket) => {
     //   socket.emit('userConnection', `socket id ${socket.id} se conectou`);

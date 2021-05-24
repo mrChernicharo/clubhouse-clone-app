@@ -26,12 +26,11 @@ const namespaces = {
 const routeConfig = Object.entries(namespaces).map(([namespace, { controller, eventEmitter }]) => {
   const controllerEvents = controller.getEvents();
 
-  eventEmitter.on('userConnected', controller.onNewConnection.bind(controller));
+  eventEmitter.on(constants.event.USER_CONNECTED, controller.onNewConnection.bind(controller));
 
   return { [namespace]: { events: controllerEvents, eventEmitter } };
 });
 
-// queremos essa estrutura aqui:
 // [
 // 	{
 // 		room: {
@@ -40,4 +39,7 @@ const routeConfig = Object.entries(namespaces).map(([namespace, { controller, ev
 // 		}
 // 	}
 // ]
+
+socketServer.attachEvents({ routeConfig });
+
 console.log('socket server running at', server.address().port);

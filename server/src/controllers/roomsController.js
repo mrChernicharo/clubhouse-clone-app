@@ -1,9 +1,16 @@
+import { constants } from '../utils/constants.js';
+
 export default class RoomsController {
   constructor() {}
 
   onNewConnection(socket) {
     const { id } = socket;
     console.log('connection estabilished with', id);
+  }
+
+  joinRoom(socket, data) {
+    console.log('dados recebidos', data);
+    socket.emit(constants.event.USER_CONNECTED, data);
   }
 
   getEvents() {
