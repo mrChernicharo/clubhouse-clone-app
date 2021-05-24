@@ -6,5 +6,11 @@ export default class RoomsController {
     console.log('connection estabilished with', id);
   }
 
-  getEvents() {}
+  getEvents() {
+    const functions = Reflect.ownKeys(RoomsController.prototype)
+      .filter((fn) => fn !== 'constructor')
+      .map((name) => [name, this[name].bind(this)]);
+
+    return new Map(functions);
+  }
 }

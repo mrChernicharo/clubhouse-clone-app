@@ -77,6 +77,15 @@ Tem que ficar de olho nessa versão do Node hein!
 
 # =======================================================================================
 
+o **Reflect.ownKeys** vai retornar todos os métodos públicos de uma classe
+
+const functions = Reflect.ownKeys(RoomsController.prototype);
+
+Queremos criar dinamicamente um array onde cada item será um array [string, function]
+E para não perdermos o contexto do this, precisamos usar o bind
+
+.map((name) => [name, this[name].bind(this)]);
+
 # =======================================================================================
 
 # =======================================================================================
