@@ -22,9 +22,18 @@ export default class RoomsController {
 
     const updatedRoom = this.#joinUserRoom(socket, updatedUserData, room);
 
-    socket.emit(constants.event.USER_CONNECTED, updatedUserData);
+    this.#notifyUsersInRoom(socket, roomId, updatedUserData);
+    this.#replyWithActiveUsers(socket, updatedRoom.users);
+  }
 
-    // console.log({ updatedRoom });
+  #replyWithActiveUsers(socket, users) {
+    const event = constants.event.LOBBY_UPDATED;
+    socket.emit(event, [...users.values()]);
+  }
+
+  #notifyUsersInRoom(socket, roomId, user) {
+    const event = constants.event.USER_CONNECTED;
+    socket.to(roomId).emit(event, user); // to emite pra todos menos aquele que se conectou
   }
 
   #joinUserRoom(socket, user, room) {
@@ -36,12 +45,8 @@ export default class RoomsController {
       roomId,
     });
 
-    // console.log({ currentUser });
-
     // definir quem é o dono da sala
     const [owner, users] = existingRoom ? [currentRoom.owner, currentRoom.users] : [currentUser, new Set()];
-
-    // console.log({ owner, currentUser });
 
     const updatedRoom = this.#mapRoom({
       ...currentRoom,
@@ -81,8 +86,7 @@ export default class RoomsController {
       ...user,
       ...userData,
       roomId,
-      // caso seja o único da sala
-      isSpeaker: !existingRoom,
+      isSpeaker: !existingRoom, // caso seja o único da sala
     });
 
     this.#users.set(userId, updatedUserData);
